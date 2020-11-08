@@ -14,7 +14,7 @@ namespace GraphqlSample.Models
         {
             Field(x => x.CategoryID);
             Field(x => x.CategoryName);
-            Field(x => x.Description);
+            Field(x => x.Description,true);
 
             Field<ListGraphType<ProductType>>(
                 "products",

@@ -20,5 +20,13 @@ namespace Graphql.Data.Repositories
         {
             return _context.Categories.Include(q=> q.Products).AsNoTracking().FirstOrDefault(q => q.CategoryID == id);
         }
+
+        public Category CreateCategory(Category category)
+        {
+            _context.Add(category);
+            _context.SaveChanges();
+
+            return category;
+        }
     }
 }

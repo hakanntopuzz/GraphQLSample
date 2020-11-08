@@ -27,40 +27,19 @@ namespace GraphqlSample
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
-
             services.AddDbContext<NHRContext>(options => options.UseSqlServer(_configuration["ConnectionStrings:NHRStatsDb"]));
-            //services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(_configuration["ConnectionStrings:NHRStatsDb"]));
-
-            //services.AddIdentity<AppIdentityUser, AppIdentityRole>()
-            //    .AddEntityFrameworkStores<AppIdentityDbContext>()
-            //    .AddDefaultTokenProviders();
-
-
-            services.Configure<IdentityOptions>(opt =>
-            {
-                opt.Password.RequireDigit = true;
-                opt.Password.RequireUppercase = true;
-                opt.Password.RequiredLength = 6;
-
-                opt.Lockout.MaxFailedAccessAttempts = 3;
-                opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3);
-
-                opt.User.RequireUniqueEmail = true;
-                opt.SignIn.RequireConfirmedEmail = true;
-                opt.SignIn.RequireConfirmedPhoneNumber = false;
-            });
-
+            
+            services.AddSingleton<CustomerType>();
+            services.AddSingleton<ProductType>();
+            services.AddSingleton<CategoryType>();
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
             services.AddSingleton<NHRQuery>();
-            services.AddSingleton<CustomerType>();
-            services.AddSingleton<ProductType>();
-            services.AddSingleton<CategoryType>();
             var sp = services.BuildServiceProvider();
             services.AddSingleton<ISchema>(new NRHSchema(new FuncDependencyResolver(type => sp.GetService(type))));
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

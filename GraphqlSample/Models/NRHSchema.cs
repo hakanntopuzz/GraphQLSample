@@ -12,7 +12,6 @@ namespace GraphqlSample.Models
         public NRHSchema(IDependencyResolver resolver) : base(resolver)
         {
             Query = resolver.Resolve<NHRQuery>();
-            //Mutation = resolver.Resolve<NHLStatsMutation>();
         }
     }
 }

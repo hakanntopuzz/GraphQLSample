@@ -14,8 +14,8 @@ namespace GraphqlSample.Models
         {
             Field<CustomerType>(
                 "customer",
-                arguments: new QueryArguments(new QueryArgument<GraphType> { Name = "CustomerID" }),
-                resolve: context => customerRepository.Get(context.GetArgument<string>("CustomerID")));
+                arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "customerID" }),
+                resolve: context => customerRepository.Get(context.GetArgument<string>("customerID")));
 
             Field<CustomerType>(
                 "randomCustomer",
